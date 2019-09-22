@@ -1,0 +1,228 @@
+﻿@model PagedList.IPagedList<Padron.Models.User>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Usuarios";
+}
+<style>
+    table {
+        width: 100%;
+    }
+
+        table tr td {
+            border: 2px solid black;
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        table tr th {
+            border: 2px solid black;
+            text-align: center;
+            background-color: #fff;
+            color: #000;
+        }
+
+    .pagination {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        cursor:pointer;
+    }
+
+        .pagination li.active {
+            color: #fff;
+            background-color: #0062cc;
+            border-color: #005cbf;
+        }
+
+            
+</style>
+
+
+@using (Html.BeginForm())
+{
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Usuarios
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.ActionLink("Persona", "Index",
+                                   new { sortOrder = "Name", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+
+                                @Html.ActionLink("Cédula", "Index",
+                                   new { sortOrder = "Cedula", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Teléfono", "Index",
+                                  new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Celular", "Index",
+                                 new { sortOrder = "Celular", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                Rol
+                            </th>
+                            <th>
+                                @Html.ActionLink("Estado", "Index",
+                               new { sortOrder = "Activo", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                Acción
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NombreCompleto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cedula)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Telefono)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Celular)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RolName)
+                            </td>
+                            <td id="estado-@item.Id">
+                                @if (item.Activo)
+                                {
+                                    @Html.Raw("Activo")
+                                }
+                                else
+                                {
+                                    @Html.Raw("Inactivo")
+
+                                }
+                            </td>
+                            <td>
+                                @if (!item.Activo)
+                                {
+                                    <button id="btn-estado-@item.Id" class="btn btn-primary btn-sm btn-estado" data-active="@item.Activo" data-id="@item.Id">
+
+                                        @if (item.Activo)
+                                        {
+                                            @Html.Raw("Desactivar")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Activar")
+
+                                        }
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button id="btn-estado-@item.Id" class="btn btn-danger btn-sm btn-estado" data-active="@item.Activo" data-id="@item.Id">
+
+                                        @if (item.Activo)
+                                        {
+                                            @Html.Raw("Desactivar")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Activar")
+
+                                        }
+                                    </button>
+                                }
+
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <div id='Paging' style="text-align:left">
+                            Mostrando  @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                            de @Model.PageCount
+                    <br />
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+
+                </div>
+            </div>
+        </div>
+        @*<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*@
+    </div>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$('#dataTable').DataTable({
+            //    language: {
+            //        infoEmpty: "No hay registros",
+            //        loadingRecords: "Cargando registros...",
+            //        search: "Búsqueda:",
+            //        processing: "Procesando",
+            //        paginate: {
+            //            first: "Primera",
+            //            last: "Última",
+            //            next: "Siguiente",
+            //            previous: "Atrás"
+            //        },
+            //        info: "Mostrando  _START_ de _END_ de un total de _TOTAL_ registros",
+            //        lengthMenu: "Mostrando _MENU_ registros por página",
+            //        zeroRecords: "No hay registros",
+            //        searchPlaceholder: "Buscar...",
+
+            //    }
+            //});
+
+            $(document).on("click", ".btn-estado", function () {
+                var btn = $(this);
+
+                var estado = btn.data("active");
+                var id = btn.data("id");
+                var statusColumn = $("#estado-" + id);
+
+                if (estado == "True") {
+                    $.get("/Users/DesactiveUser?Id=" + id, function () {
+
+                        statusColumn.html("Inactivo");
+                        btn.html("Activar");
+                        btn.data("active", "False");
+                        btn.removeClass("btn-danger");
+                        btn.addClass("btn-primary");
+                        alert("Se ha desactivado correctamente!");
+                    });
+                } else {
+                    $.get("/Users/ActiveUser?Id=" + id, function () {
+                        statusColumn.html("Activo");
+                        btn.html("Desactivar");
+                        btn.data("active", "True");
+                        btn.removeClass("btn-primary");
+                        btn.addClass("btn-danger");
+                        alert("Se ha activado correctamente!");
+                    });
+                }
+            });
+        });
+
+    </script>
+}

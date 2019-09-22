@@ -1,0 +1,184 @@
+﻿@model PagedList.IPagedList<Padron.Models.ContactForm>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    table {
+        width: 100%;
+    }
+
+        table tr td {
+            border: 2px solid black;
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        table tr th {
+            border: 2px solid black;
+            text-align: center;
+            background-color: #fff;
+            color: #000;
+        }
+
+    .pagination {
+        text-align: center;
+        justify-content: center;
+    }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        .pagination li.active {
+            color: #fff;
+            background-color: #0062cc;
+            border-color: #005cbf;
+        }
+</style>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        Personas Inscritas
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.ActionLink("Cédula", "Index",
+                                new { sortOrder = "Cedula", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Persona", "Index",
+                               new { sortOrder = "FullName", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th>
+                            @Html.ActionLink("Teléfono", "Index",
+                              new { sortOrder = "TelefonoMovil", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th>
+                            Provincia
+                        </th>
+                        <th>
+                            Municipio
+                        </th>
+                        <th>
+                            Sector
+                        </th>
+                        <th>
+                            Nombre Multiplicador
+                        </th>
+                        <th>
+                            Correo electrónico
+                        </th>
+                        <th>
+                            Colabora en redes?
+                        </th>
+                        <th>
+                            Comentario
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cedula)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TelefonoMovil)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Provincia.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Municipio)
+                            </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sector)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Coordinador.NombreCompleto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ColaboradorDigitalRedes)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comentario)
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+
+            <div id='Paging' style="text-align:left">
+                Mostrando  @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                de @Model.PageCount
+                <br />
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+
+            </div>
+        </div>
+    </div>
+    @*<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*@
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //$(document).on("click", ".btn-estado", function () {
+            //    var btn = $(this);
+
+            //    var estado = btn.data("active");
+            //    var id = btn.data("id");
+            //    var statusColumn = $("#estado-" + id);
+
+            //    if (estado == "True") {
+            //        $.get("DesactiveUser?Id=" + id, function () {
+
+            //            statusColumn.html("Inactivo");
+            //            btn.html("Activar");
+            //            btn.data("active", "False");
+            //            btn.removeClass("btn-danger");
+            //            btn.addClass("btn-primary");
+            //            alert("Se ha desactivado correctamente!");
+            //        });
+            //    } else {
+            //        $.get("ActiveUser?Id=" + id, function () {
+            //            statusColumn.html("Activo");
+            //            btn.html("Desactivar");
+            //            btn.data("active", "True");
+            //            btn.removeClass("btn-primary");
+            //            btn.addClass("btn-danger");
+            //            alert("Se ha activado correctamente!");
+            //        });
+            //    }
+            //});
+        });
+
+    </script>
+}
+

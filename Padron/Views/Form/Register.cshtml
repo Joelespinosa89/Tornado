@@ -1,0 +1,303 @@
+﻿@model Padron.Models.ContactForm
+@{
+    ViewBag.Title = "#TORNADOPLD SE ACTIVA, REGISTRATE YA";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+@*<h4 class="mx-auto">#TORNADOPLD SE ACTIVA</h4>*@
+@section styles{
+
+    <style>
+        #loading {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            z-index: 1000;
+        }
+
+        #loadingcontent {
+            display: table;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #loadingspinner {
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            text-align: center;
+            font-size: larger;
+            padding-top: 80px;
+        }
+    </style>
+}
+
+
+    <div class="container">
+        @if (ViewBag.IsSuccess != null)
+        {
+            <div class="row card-register mx-auto mt-5">
+                <div class="col align-self-center">
+
+
+                    @if (ViewBag.IsSuccess)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Información enviada correctamente!</strong>
+
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        //Model = new Padron.Models.ContactForm();
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            @ViewBag.Message
+                        </div>
+                    }
+
+                </div>
+            </div>
+        }
+
+        <div id="loading">
+            <div id="loadingcontent">
+                <p id="loadingspinner">
+                    Cargando...
+                </p>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("Register", "Form", FormMethod.Post,new { id="contactForm", onsubmit="setLoading()" }))
+        {
+            @Html.AntiForgeryToken();
+            @Html.ValidationSummary(true);
+            <input type="hidden" value="@ViewBag.UserFormId" name="CoordinadorGuid" id="CoordinadorGuid" class="form-control" placeholder="CoordinadorGuid">
+            <div class="card card-register mx-auto mt-5">
+
+
+
+                <div class="card-header">#TORNADOPLD SE ACTIVA, REGISTRATE YA</div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                @Html.TextBoxFor(m => m.Cedula, new { @class = "form-control", @placeholder = "Cedula" })
+                                @*<input value="@Model.Cedula" type="text" id="cedula" name="Cedula" class="form-control" placeholder="Cedula" autofocus="autofocus">*@
+                                <div class="input-group-append">
+                                    <button id="btnBuscarCedula" class="btn btn-secondary" type="button">Buscar</button>
+                                </div>
+                            </div>
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Cedula)</span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @placeholder = "Nombre Completo" })
+                                @*<input type="text" name="FullName" id="FullName" class="form-control" placeholder="Nombre Completo" required="required">*@
+                                <label for="FullName">Nombre Completo</label>
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.FullName)</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                @Html.TextBoxFor(m => m.TelefonoMovil, new { @class = "form-control", @placeholder = "Telefono" })
+
+                                @*<input type="tel" name="TelefonoMovil" id="TelefonoMovil" class="form-control" placeholder="Telefono" required="required">*@
+                                <label for="TelefonoMovil">Telefono</label>
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.TelefonoMovil)</span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+
+                                @Html.DropDownListFor(m => m.ProvinciaId, (List<SelectListItem>)Model.CascadingModel.Provincias , "Selecciona una provincia", new { @class= "form-control", onchange = "loadMunucipios();", id= "ProvinciaId" })
+
+                                @*<input type="tel" name="TelefonoMovil" id="TelefonoMovil" class="form-control" placeholder="Telefono" required="required">
+                                <label for="TelefonoMovil">Telefono</label>*@
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.ProvinciaId)</span>
+
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                @*@Html.TextBoxFor(m => m.Municipio, new { @class = "form-control", @placeholder = "Municipio" })*@
+                                @Html.DropDownListFor(m => m.MunicipioId, (List<SelectListItem>)Model.CascadingModel.Municipios, "Selecciona un municipio", new { @class = "form-control", @placeholder = "Municipio", id = "MunicipioId" })
+
+                                @*<input type="text" name="Municipio" id="Municipio" class="form-control" placeholder="Municipio" required="required">*@
+                                @*<label for="Municipio">Municipio</label>*@
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.MunicipioId)</span>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                @Html.TextBoxFor(m => m.Sector, new { @class = "form-control", @placeholder = "Sector" })
+
+                                @*<input type="text" name="Sector" id="Sector" class="form-control" placeholder="Sector" required="required">*@
+                                <label for="Sector">Sector</label>
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Sector)</span>
+
+                                @*@Html.ValidationMessageFor(m => m.Sector)*@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })
+
+                                @*<input type="text" name="Email" id="Email" class="form-control" placeholder="Email" required="required">*@
+                                <label for="Email">Email</label>
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Email)</span>
+
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group">
+                                @*<input type="text" name="ColaboradorDigitalRedes" id="ColaboradorDigitalRedes" class="form-control" placeholder="ColaboradorDigitalRedes" required="required">*@
+                                <label for="ColaboradorDigitalRedes">Te interesa ser colaborador digital? cuales redes utilizas?</label>
+                                <div class="form-check">
+                                    @Html.CheckBoxFor(m => m.IsInstagram, new { @class = "form-check-input" })
+
+                                    @*<input class="form-check-input" name="IsInstagram" type="checkbox" value="true" id="defaultCheck1">*@
+                                    <label class="form-check-label" for="IsInstagram">
+                                        Instagram
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    @Html.CheckBoxFor(m => m.IsFacebook, new { @class = "form-check-input" })
+
+                                    @*<input class="form-check-input" name="IsFacebook" type="checkbox" value="true" id="defaultCheck2">*@
+                                    <label class="form-check-label" for="IsFacebook">
+                                        Facebook
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    @Html.CheckBoxFor(m => m.IsTwitter, new { @class = "form-check-input" })
+
+                                    @*<input class="form-check-input" name="IsTwitter" type="checkbox" value="true" id="defaultCheck3">*@
+                                    <label class="form-check-label" for="IsTwitter">
+                                        Twitter
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    @Html.CheckBoxFor(m => m.IsOther, new { @class = "form-check-input" })
+
+                                    @*<input class="form-check-input" name="IsOther" type="checkbox" value="true" id="defaultCheck4">*@
+                                    <label class="form-check-label" for="IsOther">
+                                        Otras
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                @Html.TextAreaFor(m => m.Comentario, new { @class = "form-control", @placeholder = "Comentario" })
+                                @*<textarea type="text" name="Comentario" id="Comentario" class="form-control" placeholder="Comentario" required="required"></textarea>*@
+                                @*<label for="Comentario">Comentario</label>*@
+                                @Html.ValidationMessageFor(m => m.Comentario)
+                            </div>
+                        </div>
+                        <input class="btn btn-primary btn-block" id="submitbtn" type="submit" value="Enviar" />
+                        @*<a  href="login.html">Registrar</a>*@
+                    </form>
+                </div>
+            </div>
+
+
+
+
+
+
+        }
+
+    </div>
+
+
+
+
+@section Scripts{
+
+    <script src="~/Scripts/jquery.mask.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Cedula').mask('000-0000000-0');
+            $('#TelefonoMovil').mask('000-000-0000');
+            loadMunicipios();
+        })
+
+        function setLoading() {
+            $("#loading").fadeIn();
+
+        }
+
+
+
+        $(function () {
+            $('#ProvinciaId').change(function () {
+                loadMunicipios();
+            });
+
+            $("#btnBuscarCedula").on('click', function () {
+                var $txtCedula = $("#Cedula").val();
+                var $txtNombres = $("#FullName");
+                $("#loading").fadeIn();
+
+                $.getJSON('@Url.Action("GetByCedula")', { cedula: $txtCedula }, function (persona) {
+                    $("#loading").fadeOut();
+                   
+                    if (persona.Cedula) {
+                        $txtNombres.val(persona.Nombre +" "+ persona.Apellido);
+                    } else {
+                        alert("Persona no encontrada");
+                        $txtNombres.val("");
+                    }
+                })
+            })
+        })
+
+        function loadMunicipios() {
+        var selectedProvinciaId = $("#ProvinciaId").val();
+        var municipiosSelect = $('#MunicipioId');
+            municipiosSelect.empty();
+            //municipiosSelect.append($('<option/>', {
+            //    value: null,
+            //    text: "Seleccione un municipio"
+            //}));
+                if (selectedProvinciaId != null && selectedProvinciaId != '') {
+                    $.getJSON('@Url.Action("GetMunicipios")', { provinciaId: selectedProvinciaId }, function (municipios) {
+                        if (municipios != null && !jQuery.isEmptyObject(municipios)) {
+                            municipiosSelect.append($('<option/>', {
+                                value: null,
+                                text: "Seleccione un municipio"
+                            }));
+                            $.each(municipios, function (index, region) {
+                                municipiosSelect.append($('<option/>', {
+                                    value: region.Value,
+                                    text: region.Text
+                                }));
+                            });
+                        };
+                    });
+                }
+        }
+    </script>
+}
+

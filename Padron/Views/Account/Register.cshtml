@@ -1,0 +1,189 @@
+﻿@model Padron.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Registrarse";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="container">
+    <div class="card card-register mx-auto mt-5">
+        <div class="card-header"><b>Crear una cuenta</b></div>
+        <div class="card-body">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <input type="text" id="Cedula" value="@Model.Cedula" name="Cedula" class="form-control" placeholder="Cédula" required="required" autofocus="autofocus">
+                            <label for="Cedula">Cédula</label>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Cedula, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <input type="text" id="Mail" value="@Model.Mail" name="Mail" class="form-control" placeholder="Mail" required="required" autofocus="autofocus">
+                            <label for="Mail">Correo Electrónico</label>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Mail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                <input type="text" id="Nombres" value="@Model.Nombres" name="Nombres" class="form-control" placeholder="Nombres" required="required">
+                                <label for="Nombres">Nombre(s)</label>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                <input type="text" id="Apellidos" value="@Model.Apellidos" name="Apellidos" class="form-control" placeholder="Apellidos" required="required">
+                                <label for="Apellidos">Apellido(s)</label>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                <input type="text" id="Telefono" value="@Model.Telefono" name="Telefono" class="form-control" placeholder="Teléfono">
+                                <label for="Telefono">Teléfono</label>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                <input type="text" id="Celular" value="@Model.Celular" name="Celular" class="form-control" required placeholder="Teléfono">
+                                <label for="Celular">Celular</label>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-label-group">
+                                @Html.DropDownList("RolId", null, "Selecciona un rol", htmlAttributes: new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.RolId, "", new { @class = "text-danger", @id= "RolId", @placeholder="Seleccione Rol" })
+
+                        </div>
+                        <div class="col-md-12">
+                            <div  class="form-label-group d-none mt-2" id="CoordinadorGroup">
+                                <input type="text" id="Coordinador"  value="@Model.Coordinador" name="Coordinador" class="form-control" placeholder="Coordinador">
+                                <label for="Coordinador">Escriba el nombre del coordinador</label>
+                            </div>
+                            <div class="form-label-group  d-none mt-2" id="DirectorGroup">
+                                <input type="text" id="Director"  value="@Model.Director" name="Director" class="form-control" placeholder="Director">
+                                <label for="Director">Escriba el nombre del director</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                <input type="password" id="Password" name="Password" class="form-control" placeholder="Password" required="required">
+                                <label for="Password">Contraseña</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Confirmar contraseña" required="required">
+                                <label for="ConfirmPassword">Confirmar contraseña</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit">Registrarse</button>
+                <br />
+                @Html.ValidationSummary("", new { @class = "text-danger text-center" })
+
+                }
+                <div class="text-center">
+                    <a class="d-block small mt-3" href="Login">Ir al inicio de sesión</a>
+                </div>
+            </div>
+    </div>
+</div>
+@*@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+
+        <h4>Create a new account.</h4>
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Register" />
+            </div>
+        </div>
+    }*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/jquery.mask.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Cedula').mask('000-0000000-0');
+            $('#Telefono').mask('000-000-0000');
+            $('#Celular').mask('000-000-0000');
+
+
+            $(function () {
+                $('#RolId').change(function () {
+                    var $groupCoordinador = $("#CoordinadorGroup");
+                    var $groupDirector = $("#DirectorGroup");
+                    var $txtCordinador = $("#Coordinador")
+                    var $txtDirector = $("#Director")
+
+                    var selectedRol = $("#RolId option:selected").text();
+
+                    if (selectedRol === "Multiplicador") {
+                        $groupCoordinador.removeClass("d-none")
+                        $groupDirector.removeClass("d-none")
+                        $txtCordinador.prop('required', true);
+                        $txtDirector.prop('required', true);
+
+
+                    } else if (selectedRol === "Cordinador") {
+                        $groupCoordinador.addClass("d-none")
+                        $groupDirector.removeClass("d-none")
+                        $txtCordinador.prop('required', false);
+                        $txtDirector.prop('required',  true);
+                    } else {
+                        $groupCoordinador.addClass("d-none")
+                        $groupDirector.addClass("d-none")
+                        $txtCordinador.prop('required', false);
+                        $txtDirector.prop('required', false);
+                        $txtCordinador.val("")
+                        $txtDirector.val("")
+                    }
+                });
+            })
+        })
+
+    </script>
+}
