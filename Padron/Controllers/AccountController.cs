@@ -73,6 +73,7 @@ namespace Padron.Controllers
                 return View(model);
             }
 
+            model.Username = model.Username.Replace("-","").Trim();
             var user = UserManager.Users.FirstOrDefault(x => x.UserName.ToLower().Equals(model.Username.ToLower()));
 
             if (user != null && !user.Activo)
@@ -161,15 +162,18 @@ namespace Padron.Controllers
         {
             var context = new ApplicationDbContext();
             ViewBag.RolId = new SelectList(context.Roles.Where(x => x.Name != "Administrador"), "Id", "Name");
-            model.Username = model.Cedula;
             if (ModelState.IsValid)
             {
+                var  cedula = model.Cedula.Replace("-", "").Trim();
+
+                model.Username = cedula;
+
                 var user = new User ()
                 {
-                    UserName = model.Cedula,
+                    UserName = cedula,
                     Nombres = model.Nombres,
                     Apellidos = model.Apellidos,
-                    Cedula = model.Cedula,
+                    Cedula = cedula,
                     Celular = model.Celular,
                     Telefono = model.Telefono,
                     UserCode = Guid.NewGuid(),

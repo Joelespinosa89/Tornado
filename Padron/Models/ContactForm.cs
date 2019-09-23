@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Padron.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +18,7 @@ namespace Padron.Models
         public int Id { get; set; }
         [Display(Name = "Cedula")]
         [Required(ErrorMessage = "Inserte la cédula")]
+        [CheckOnlyCedula]
         public string Cedula { get; set; }
         [Display(Name = "Teléfono")]
         [Required(ErrorMessage = "Ingrese un número de teléfono")]
