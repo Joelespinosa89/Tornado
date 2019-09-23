@@ -163,10 +163,10 @@
 
                     if (selectedRol === "Multiplicador") {
                         $groupCoordinador.removeClass("d-none")
-                        $groupDirector.removeClass("d-none")
+                        $groupDirector.addClass("d-none")
                         $txtCordinador.prop('required', true);
-                        $txtDirector.prop('required', true);
-
+                        $txtDirector.prop('required', false);
+                        $txtDirector.val("")
 
                     } else if (selectedRol === "Cordinador") {
                         $groupCoordinador.addClass("d-none")

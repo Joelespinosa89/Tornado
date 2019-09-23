@@ -270,6 +270,21 @@
                         $txtNombres.val("");
                     }
                 })
+
+
+              $.getJSON('@Url.Action("GetContactByCedula")', { cedula: $txtCedula }, function (persona) {
+                    $("#loading").fadeOut();
+                   
+                  if (persona.Cedula) {
+                   
+                      alert("Este numero de identificación ya fue registrada, no puede continuar !");
+                         $groupCoordinador.removeClass("btn-primary")
+                  } else {
+                      
+                        $submitbtn.addClass("d-none")
+                  }
+
+                })
             })
         })
 

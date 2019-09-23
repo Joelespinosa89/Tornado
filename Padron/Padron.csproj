@@ -1779,6 +1779,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\tornado_img.jpeg" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1830,6 +1831,7 @@
     <Content Include="Content\font\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\font\webfonts\fa-solid-900.woff" />
     <Content Include="Content\font\webfonts\fa-solid-900.woff2" />
+    <None Include="Properties\PublishProfiles\MovimientoTornado - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap4.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1839,6 +1841,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.easing.min.js" />
+    <Content Include="Scripts\jquery.mask.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />

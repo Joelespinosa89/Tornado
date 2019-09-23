@@ -11,8 +11,9 @@
     @RenderSection("styles", required: false)
 
 </head>
-<body id="page-top" class="bg-dark">
 
+
+<body id="page-top" class="bg-dark">
 
     <div id="wrapper">
 
@@ -24,12 +25,11 @@
                 @RenderBody()
 
             </div>
-            <!-- /.container-fluid -->
-            <!-- Sticky Footer -->
 
 
         </div>
         <!-- /.content-wrapper -->
+
 
     </div>
     <!-- /#wrapper -->
@@ -39,7 +39,6 @@
     </a>
 
     <!-- Logout Modal-->
-
     @*<div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -71,5 +70,17 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-72762893-4"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-72762893-4');
+    </script>
+
+
 </body>
 </html>

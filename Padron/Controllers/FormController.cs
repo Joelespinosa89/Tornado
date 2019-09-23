@@ -55,6 +55,15 @@ namespace Padron.Controllers
             return Json(persona  ?? new Persona(), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetContactByCedula(string cedula)
+        {
+ 
+            var contacto = _context.ContactForms.FirstOrDefault(x => x.Cedula == cedula);
+            return Json(contacto ?? new ContactForm (), JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult Success(Guid id)
         {
             Session["UserFormId"] = ViewBag.UserFormId = id;
