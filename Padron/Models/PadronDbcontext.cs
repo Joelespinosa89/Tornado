@@ -21,5 +21,6 @@ namespace Padron.Models
             modelBuilder.Entity<Persona>().ToTable("View_Persona").HasKey(x=>x.Cedula);
             base.OnModelCreating(modelBuilder);
         }
+
     }
 }

@@ -45,6 +45,10 @@ namespace Padron.Models
         public string Email { get; set; }
         public string ColaboradorDigitalRedes { get; set; }
         public string Comentario { get; set; }
+        public string Instagram { get; set; }
+        public string ColegioElectoral { get; set; }
+        public string DistritoMunicipal { get; set; }
+
         public int Deleted { get; set; }
         [NotMapped]
         public bool IsInstagram { get; set; }
@@ -73,6 +77,7 @@ namespace Padron.Models
         public virtual User Coordinador { get; set; }
         public virtual Provincia Provincia { get; set; }
         public virtual Municipio Municipio { get; set; }
+
 
 
 

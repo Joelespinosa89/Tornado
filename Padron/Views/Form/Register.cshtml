@@ -1,10 +1,10 @@
 ﻿@model Padron.Models.ContactForm
 @{
-    ViewBag.Title = "#TORNADOPLD SE ACTIVA, REGISTRATE YA";
+    ViewBag.Title = "#Registro de Electores, REGISTRATE YA";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
-@*<h4 class="mx-auto">#TORNADOPLD SE ACTIVA</h4>*@
+@*<h4 class="mx-auto">#Registro de Electores</h4>*@
 @section styles{
 
     <style>
@@ -86,7 +86,7 @@
 
 
 
-                <div class="card-header">#TORNADOPLD SE ACTIVA, REGISTRATE YA</div>
+                <div class="card-header">#Registro de Electores, REGISTRATE YA</div>
                 <div class="card-body">
                     <form>
                         <div class="form-group">
@@ -122,10 +122,10 @@
                         <div class="form-group">
                             <div class="form-label-group">
 
-                                @Html.DropDownListFor(m => m.ProvinciaId, (List<SelectListItem>)Model.CascadingModel.Provincias , "Selecciona una provincia", new { @class= "form-control", id= "ProvinciaId" })
+                                @Html.DropDownListFor(m => m.ProvinciaId, (List<SelectListItem>)Model.CascadingModel.Provincias, "Selecciona una provincia", new { @class = "form-control", id = "ProvinciaId" })
 
                                 @*<input type="tel" name="TelefonoMovil" id="TelefonoMovil" class="form-control" placeholder="Telefono" required="required">
-                                <label for="TelefonoMovil">Telefono</label>*@
+                <label for="TelefonoMovil">Telefono</label>*@
                                 <span class="text-danger">@Html.ValidationMessageFor(m => m.ProvinciaId)</span>
 
 
@@ -146,6 +146,19 @@
 
                         <div class="form-group">
                             <div class="form-label-group">
+                                @Html.TextBoxFor(m => m.DistritoMunicipal, new { @class = "form-control", @placeholder = "Distrito Municipal" })
+
+                                @*<input type="text" name="Sector" id="Sector" class="form-control" placeholder="Sector" required="required">*@
+                                <label for="Sector">Distrito Municipal</label>
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.DistritoMunicipal)</span>
+
+                                @*@Html.ValidationMessageFor(m => m.Sector)*@
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="form-label-group">
                                 @Html.TextBoxFor(m => m.Sector, new { @class = "form-control", @placeholder = "Sector" })
 
                                 @*<input type="text" name="Sector" id="Sector" class="form-control" placeholder="Sector" required="required">*@
@@ -156,6 +169,18 @@
                             </div>
                         </div>
 
+
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                @Html.TextBoxFor(m => m.ColegioElectoral, new { @class = "form-control", @placeholder = "Colegio Electoral" })
+
+                                @*<input type="text" name="Email" id="Email" class="form-control" placeholder="Email" required="required">*@
+                                <label for="Email">Colegio Electoral</label>
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.ColegioElectoral)</span>
+
+
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="form-label-group">
                                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })
@@ -169,44 +194,15 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="form-group">
-                                @*<input type="text" name="ColaboradorDigitalRedes" id="ColaboradorDigitalRedes" class="form-control" placeholder="ColaboradorDigitalRedes" required="required">*@
-                                <label for="ColaboradorDigitalRedes">Te interesa ser colaborador digital? cuales redes utilizas?</label>
-                                <div class="form-check">
-                                    @Html.CheckBoxFor(m => m.IsInstagram, new { @class = "form-check-input" })
-
-                                    @*<input class="form-check-input" name="IsInstagram" type="checkbox" value="true" id="defaultCheck1">*@
-                                    <label class="form-check-label" for="IsInstagram">
-                                        Instagram
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    @Html.CheckBoxFor(m => m.IsFacebook, new { @class = "form-check-input" })
-
-                                    @*<input class="form-check-input" name="IsFacebook" type="checkbox" value="true" id="defaultCheck2">*@
-                                    <label class="form-check-label" for="IsFacebook">
-                                        Facebook
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    @Html.CheckBoxFor(m => m.IsTwitter, new { @class = "form-check-input" })
-
-                                    @*<input class="form-check-input" name="IsTwitter" type="checkbox" value="true" id="defaultCheck3">*@
-                                    <label class="form-check-label" for="IsTwitter">
-                                        Twitter
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    @Html.CheckBoxFor(m => m.IsOther, new { @class = "form-check-input" })
-
-                                    @*<input class="form-check-input" name="IsOther" type="checkbox" value="true" id="defaultCheck4">*@
-                                    <label class="form-check-label" for="IsOther">
-                                        Otras
-                                    </label>
-                                </div>
-
+                            <div class="form-label-group">
+                                @Html.TextBoxFor(m => m.Instagram, new { @class = "form-control", @placeholder = "Cuenta de Instagram" })
+                                @*<input type="text" name="FullName" id="FullName" class="form-control" placeholder="Nombre Completo" required="required">*@
+                                <label for="FullName">Cuenta de Instagram</label>
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Instagram)</span>
                             </div>
                         </div>
+
+
                         <div class="form-group">
                             <div class="form-label-group">
                                 @Html.TextAreaFor(m => m.Comentario, new { @class = "form-control", @placeholder = "Comentario" })

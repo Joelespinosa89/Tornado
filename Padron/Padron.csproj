@@ -1780,6 +1780,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\feri.jpeg" />
+    <Content Include="images\rafapc.PNG" />
     <Content Include="images\tornado_img.jpeg" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1833,6 +1835,8 @@
     <Content Include="Content\font\webfonts\fa-solid-900.woff" />
     <Content Include="Content\font\webfonts\fa-solid-900.woff2" />
     <None Include="Properties\PublishProfiles\MovimientoTornado - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\RegistroElectores - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\RegistroElectoresRafapc - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\dataTables.bootstrap4.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
