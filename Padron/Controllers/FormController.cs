@@ -29,10 +29,11 @@ namespace Padron.Controllers
         {
             Session["UserFormId"] =  ViewBag.UserFormId = id;
 
-            if (!_context.Users.Any(x => x.UserCode == id))
-                throw new HttpException(404, "File Not Found");
+            //if (!_context.Users.Any(x => x.UserCode == id))
+            //    throw new HttpException(404, "File Not Found");
             var model = new ContactForm();
             model.CascadingModel.Provincias = _context.Provincias.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            model.CascadingModel.ElectoralColleges = _context.ElectoralColleges.Select(x => new SelectListItem { Text = x.Codigo, Value = x.Codigo.ToString() }).ToList();
             ModelState.Clear();
 
             return View(model);
@@ -75,7 +76,7 @@ namespace Padron.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "Cedula,TelefonoMovil,FullName,ProvinciaId,MunicipioId,Sector,Email,IsInstagram,IsFacebook,IsTwitter,IsOther,ColaboradorDigitalRedes,Comentario,CoordinadorGuid,CascadingModel,Instagram,ColegioElectoral,DistritoMunicipal")] ContactForm model)
+        public ActionResult Register([Bind(Include = "Cedula,TelefonoMovil,FullName,ProvinciaId,MunicipioId,Sector,Email,IsInstagram,IsFacebook,IsTwitter,IsOther,ColaboradorDigitalRedes,Comentario,CoordinadorGuid,CascadingModel,Instagram,CodigoColegioElectoral,DistritoMunicipal")] ContactForm model)
         {
             model.CascadingModel.Provincias = _context.Provincias.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
 

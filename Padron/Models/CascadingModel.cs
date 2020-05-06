@@ -12,10 +12,11 @@ namespace Padron.Models
         {
             this.Provincias = new List<SelectListItem>();
             this.Municipios = new List<SelectListItem>();
+            this.ElectoralColleges = new List<SelectListItem>();
         }
 
         public List<SelectListItem> Provincias { get; set; }
         public List<SelectListItem> Municipios { get; set; }
-
+        public List<SelectListItem> ElectoralColleges { get; set; }
     }
 }

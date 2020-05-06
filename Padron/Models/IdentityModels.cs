@@ -97,6 +97,7 @@ namespace Padron.Models
         public DbSet<Provincia> Provincias { get; set; }
         public DbSet<ContactForm> ContactForms { get; set; }
         public DbSet<Municipio> Municipios { get; set; }
+        public DbSet<ElectoralCollege> ElectoralColleges { get; set; }
 
         public static ApplicationDbContext Create()
         {

@@ -46,9 +46,9 @@ namespace Padron.Models
         public string ColaboradorDigitalRedes { get; set; }
         public string Comentario { get; set; }
         public string Instagram { get; set; }
-        public string ColegioElectoral { get; set; }
+        public string CodigoColegioElectoral { get; set; }
         public string DistritoMunicipal { get; set; }
-
+        public bool Validado { get; set; }
         public int Deleted { get; set; }
         [NotMapped]
         public bool IsInstagram { get; set; }

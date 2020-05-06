@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Padron.Models
 {
-    public class ColegioElectoral
+    public class ElectoralCollege
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]

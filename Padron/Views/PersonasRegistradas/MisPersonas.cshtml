@@ -38,9 +38,6 @@
                               new { sortOrder = "TelefonoMovil", CurrentSort = ViewBag.CurrentSort })
                         </th>
                         <th>
-                            Provincia
-                        </th>
-                        <th>
                             Municipio
                         </th>
                         <th>
@@ -53,10 +50,14 @@
                             Correo electrónico
                         </th>
                         <th>
-                            Colabora en redes?
+                            Mesa electoral
                         </th>
                         <th>
                             Comentario
+                        </th>
+
+                        <th>
+                            Estado
                         </th>
                     </tr>
                 </thead>
@@ -66,40 +67,71 @@
 
                     @foreach (var item in Model)
                     {
-                        <tr>
+                    <tr>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Cedula)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FullName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TelefonoMovil)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Provincia.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Municipio)
-                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cedula)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TelefonoMovil)
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Sector)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Coordinador.NombreCompleto)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ColaboradorDigitalRedes)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Comentario)
-                            </td>
-                        </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Municipio)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sector)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Coordinador.NombreCompleto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CodigoColegioElectoral)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comentario)
+                        </td>
+                        <td>
+                            @if (!item.Validado)
+                            {
+                                <button id="btn-estado-@item.Id" class="btn btn-danger btn-sm btn-estado" data-active="@item.Validado" data-id="@item.Id">
+
+                                    @if (item.Validado)
+                                    {
+                                        @Html.Raw("Validado")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Validar")
+
+                                    }
+                                </button>
+                            }
+                            else
+                            {
+                                <button id="btn-estado-@item.Id" class="btn btn-primary btn-sm btn-estado" data-active="@item.Validado" data-id="@item.Id">
+
+                                    @if (item.Validado)
+                                    {
+                                        @Html.Raw("Validado")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Validar")
+
+                                    }
+                                </button>
+                            }
+
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

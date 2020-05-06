@@ -1,7 +1,59 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Padron.Helpers;
+
+<style>
+    .left .tc-sidebar {
+        background-color: #0a5bad;
+    }
+
+
+    .bg-img {
+        /* The image used */
+        background-image: url('../../images/feris_navbar.jpeg');
+        min-height: 1200px;
+        min-width: 100px;
+        /* Center and scale the image nicely */
+        background-position: top;
+        background-repeat: no-repeat;
+        background-size: contain;
+        /* Needed to position the navbar */
+        position: relative;
+        background-color: #0a5bad;
+    }
+
+    /* Position the navbar container inside the image */
+    .container {
+        position: absolute;
+        margin: 50px;
+        width: auto; 
+    }
+
+    /* The navbar */
+    .topnav {
+        overflow: hidden;
+        background-color: #0a5bad;
+    }
+
+        /* Navbar links */
+        .topnav a {
+            float: left;
+            color: #0a5bad;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+</style>
+
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,29 +69,54 @@
     @if (Request.IsAuthenticated)
     {
 
-<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-<a class="navbar-brand mr-1" href="index.html">Padron</a>
+        <a class="navbar-brand mr-1" href="index.html">Registro de Electores</a>
 
-<button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-    <i class="fas fa-bars"></i>
-</button>
+        <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
 
-<!-- Navbar Search -->
-@*<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search"></i>
-                </button>
+
+        @if (User.IsInRole("Administrador"))
+        {
+            <li class="nav-item active">
+                <a class="nav-link" href="/Users/Index">
+                    <i class="fas fa-fw fa-user-alt"></i>
+                    <span>Usuarios</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/PersonasRegistradas/Index">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Personas registradas</span>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="/PersonasRegistradas/MisPersonas">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Personas registradas</span>
+                </a>
+            </li>
+        }
+        <!-- Navbar Search -->
+        @*<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
             </div>
-        </div>
-    </form>*@
+        </form>*@
 
         <!-- Navbar -->
 
-        @using(Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
         {
             @Html.AntiForgeryToken()
 
@@ -49,7 +126,7 @@
                         @User.Identity.GetNombreCompleto() <i class="fas fa-user-circle fa-fw"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <button type = "submit" class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Salir</button>
+                        <button type="submit" class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Salir</button>
                     </div>
                 </li>
             </ul>
@@ -65,33 +142,10 @@
 
 
         <!-- Sidebar -->
-        <ul class="sidebar navbar-nav">
-
-            @if (User.IsInRole("Administrador"))
-                {
-            <li class="nav-item active">
-                <a class="nav-link" href="/Users/Index">
-                    <i class="fas fa-fw fa-user-alt"></i>
-                    <span>Usuarios</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/PersonasRegistradas/Index">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Personas registradas</span>
-                </a>
-            </li>
-            }
-            else
-            {
-            <li class="nav-item">
-                <a class="nav-link" href="/PersonasRegistradas/MisPersonas">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Personas registradas</span>
-                </a>
-            </li>
-            }
-
+        <ul class="sidebar navbar-nav" >
+            <div class="bg-img">
+              
+            </div>
         </ul>
         }
 

@@ -197,6 +197,7 @@
     <Compile Include="Models\Municipio.cs" />
     <Compile Include="Models\PadronDbcontext.cs" />
     <Compile Include="Models\PadronEntities\Persona.cs" />
+    <Compile Include="Models\ElectoralCollege.cs" />
     <Compile Include="Models\Provincia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -1781,6 +1782,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\feri.jpeg" />
+    <Content Include="images\feris_navbar.jpeg" />
     <Content Include="images\rafapc.PNG" />
     <Content Include="images\tornado_img.jpeg" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -1937,7 +1939,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61709</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61709/</IISUrl>
+          <IISUrl>http://localhost:61708/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
