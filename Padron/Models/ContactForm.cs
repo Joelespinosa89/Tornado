@@ -18,7 +18,7 @@ namespace Padron.Models
         public int Id { get; set; }
         [Display(Name = "Cedula")]
         [Required(ErrorMessage = "Inserte la cédula")]
-        [CheckOnlyCedula]
+      //  [CheckOnlyCedula]
         public string Cedula { get; set; }
         [Display(Name = "Teléfono")]
         [Required(ErrorMessage = "Ingrese un número de teléfono")]
@@ -36,10 +36,11 @@ namespace Padron.Models
         public int MunicipioId { get; set; }
         [Required(ErrorMessage = "Ingrese un Sector")]
         public string Sector { get; set; }
+
         [ForeignKey("Coordinador")]
         [Required(ErrorMessage = "Coordinador no especificado")]
-
         public int CoordinadorId { get; set; }
+
         [Display(Name = "Correo electrónico")]
         [Required(ErrorMessage = "Ingrese un Correo Electrónico")]
         public string Email { get; set; }

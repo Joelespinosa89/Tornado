@@ -8,10 +8,18 @@
     <div id="content">
         <!-- Icons source http://dribbble.com/shots/913555-Flat-Web-Elements -->
         <div class="notify successbox">
-            <h1>¡Enviado!</h1>
+            <h1>¡Elector Registrado, Exitosamente!</h1>
             <p>Muchas gracias por inscribirte, estaremos contactándote más adelante</p>
+
         </div>
-        
+
+        <div>
+            @Html.ActionLink("Volver Al Menu", "../PersonasRegistradas/MisPersonas")
+        </div>
+
+        <div>
+            @Html.ActionLink("Nuevo Registro", "Register")
+        </div>
 
     </div><!-- @@end #content -->
 </div><!-- @@end #w -->

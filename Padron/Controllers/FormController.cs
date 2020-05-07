@@ -24,16 +24,16 @@ namespace Padron.Controllers
         {
             return View();
         }
-
-        public ActionResult Register(Guid id)
+        [Route("/Register")]
+        public ActionResult Register()
         {
-            Session["UserFormId"] =  ViewBag.UserFormId = id;
 
             //if (!_context.Users.Any(x => x.UserCode == id))
             //    throw new HttpException(404, "File Not Found");
             var model = new ContactForm();
             model.CascadingModel.Provincias = _context.Provincias.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
             model.CascadingModel.ElectoralColleges = _context.ElectoralColleges.Select(x => new SelectListItem { Text = x.Codigo, Value = x.Codigo.ToString() }).ToList();
+            model.CascadingModel.Users = _context.Users.Where(x => x.Activo == true && x.UserName != "admin").Select(x => new SelectListItem { Text = x.Nombres + " " + x.Apellidos, Value = x.Id.ToString() }).ToList();
             ModelState.Clear();
 
             return View(model);
@@ -68,29 +68,28 @@ namespace Padron.Controllers
 
 
 
-        public ActionResult Success(Guid id)
+        public ActionResult Success()
         {
-            Session["UserFormId"] = ViewBag.UserFormId = id;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "Cedula,TelefonoMovil,FullName,ProvinciaId,MunicipioId,Sector,Email,IsInstagram,IsFacebook,IsTwitter,IsOther,ColaboradorDigitalRedes,Comentario,CoordinadorGuid,CascadingModel,Instagram,CodigoColegioElectoral,DistritoMunicipal")] ContactForm model)
+        public ActionResult Register([Bind(Include = "Cedula,TelefonoMovil,FullName,ProvinciaId,MunicipioId,Sector,Email,IsInstagram,IsFacebook,IsTwitter,IsOther,ColaboradorDigitalRedes,Comentario,CoordinadorGuid,CascadingModel,Instagram,CodigoColegioElectoral,DistritoMunicipal,CoordinadorId")] ContactForm model)
         {
             model.CascadingModel.Provincias = _context.Provincias.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
 
             ViewBag.IsSuccess = false;
             model.ConcatRedes();
             //var sd = Guid.Parse(Session["UserFormId"].ToString());
-            model.CoordinadorGuid = (model.CoordinadorGuid == Guid.Empty || model.CoordinadorGuid == null ? Guid.Parse(Session["UserFormId"].ToString()) : model.CoordinadorGuid);
+            //model.CoordinadorGuid = (model.CoordinadorGuid == Guid.Empty || model.CoordinadorGuid == null ? Guid.Parse(Session["UserFormId"].ToString()) : model.CoordinadorGuid);
 
-            ViewBag.UserFormId = model.CoordinadorGuid;
-            var coordinador  = _context.Users.FirstOrDefault(x => x.UserCode == (model.CoordinadorGuid));
-            if (coordinador == null)
+            //ViewBag.UserFormId = model.CoordinadorGuid;
+            var coordinador = _context.ContactForms.FirstOrDefault(x => x.Cedula == (model.Cedula.Replace("-", "").Trim()));
+            if (coordinador != null)
             {
-                ViewBag.Message = "Se debe especificar un coordinador";
-
+                ViewBag.Message = "Ya existe un elector con este numero de cedula!";
+                model.CascadingModel.Users = _context.Users.Where(x => x.Activo == true && x.UserName != "admin").Select(x => new SelectListItem { Text = x.Nombres + " " + x.Apellidos, Value = x.Id.ToString() }).ToList();
                 return View(model);
             }
 
@@ -101,7 +100,7 @@ namespace Padron.Controllers
                 return View(model);
             }
 
-            model.CoordinadorId = coordinador.Id;
+            //model.CoordinadorId = coordinador.Id;
             model.Cedula = model.Cedula.Replace("-", "").Trim();
 
             _context.ContactForms.Add(model);

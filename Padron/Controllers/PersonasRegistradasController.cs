@@ -78,7 +78,8 @@ namespace Padron.Controllers
             sortOrder = String.IsNullOrEmpty(sortOrder) ? "FullName" : sortOrder;
             IPagedList<ContactForm> contactForms = null;
 
-            var forms = db.ContactForms.Include(u => u.Coordinador).Include(u => u.Provincia).Where(x => x.CoordinadorId == userIdClaim);
+            // var forms = db.ContactForms.Include(u => u.Coordinador).Include(u => u.Provincia).Where(x => x.CoordinadorId == userIdClaim);
+            var forms = db.ContactForms.Include(u => u.Coordinador).Include(u => u.Provincia);
 
             switch (sortOrder)
             {
@@ -112,7 +113,8 @@ namespace Padron.Controllers
                     break;
             }
 
-            ViewBag.UserURL = GetBaseUrl() + "Form/" + User.Identity.GetUserCode() + "/Register";
+            //ViewBag.UserURL = GetBaseUrl() + "Form/" + User.Identity.GetUserCode() + "/Register";
+            ViewBag.UserURL = GetBaseUrl() + "Form/Register";
 
             return View(contactForms);
         }
@@ -129,5 +131,47 @@ namespace Padron.Controllers
 
             return baseUrl;
         }
+
+        public bool ValidateRegister(int Id)
+        {
+         
+            try
+            {
+                var ContactForm = db.ContactForms.FirstOrDefault(x => x.Id == Id);
+                ContactForm.Validado = true;
+                db.Entry(ContactForm).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            {
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        string message = string.Format("{0}:{1}",
+                            validationErrors.Entry.Entity.ToString(),
+                            validationError.ErrorMessage);
+                        // raise a new exception nesting  
+                        // the current instance as InnerException  
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
+            }
+
+            return true;
+        }
+        
+        public bool InValidateRegister(int Id)
+        {
+            var ContactForm = db.ContactForms.FirstOrDefault(x => x.Id == Id);
+            ContactForm.Validado = false;
+            db.Entry(ContactForm).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return true;
+        }
+
     }
 }

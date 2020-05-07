@@ -1783,6 +1783,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="images\feri.jpeg" />
     <Content Include="images\feris_navbar.jpeg" />
+    <Content Include="images\feris_navbar2.jpeg" />
     <Content Include="images\rafapc.PNG" />
     <Content Include="images\tornado_img.jpeg" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

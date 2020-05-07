@@ -6,11 +6,11 @@
 <div class="card mb-3">
     <div class="card-header">
         <i class="fas fa-table"></i>
-        Enlace de invitación
+        Enlace de Registro
     </div>
     <div class="card-body text-center">
-        <span>Para invitar a personas, compartir el siguiente enlace : </span><br />
-                                                                              <a href="@ViewBag.UserURL">@ViewBag.UserURL</a>
+        <span>Para registro de personas, accedad o comparta el siguiente enlace : </span><br />
+        <a href="@ViewBag.UserURL">@ViewBag.UserURL</a>
     </div>
     @*<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>*@
 </div>
@@ -61,77 +61,77 @@
                         </th>
                     </tr>
                 </thead>
-          
-           
+
+
                 <tbody>
 
                     @foreach (var item in Model)
                     {
-                    <tr>
+                        <tr>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Cedula)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TelefonoMovil)
-                        </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cedula)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TelefonoMovil)
+                            </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Municipio)
-                        </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Municipio)
+                            </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Sector)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Coordinador.NombreCompleto)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CodigoColegioElectoral)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Comentario)
-                        </td>
-                        <td>
-                            @if (!item.Validado)
-                            {
-                                <button id="btn-estado-@item.Id" class="btn btn-danger btn-sm btn-estado" data-active="@item.Validado" data-id="@item.Id">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sector)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Coordinador.NombreCompleto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CodigoColegioElectoral)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Comentario)
+                            </td>
+                            <td>
+                                @if (!item.Validado)
+                                {
+                                    <button id="btn-estado-@item.Id" class="btn btn-danger btn-sm btn-estado" data-active="@item.Validado" data-id="@item.Id">
 
-                                    @if (item.Validado)
-                                    {
-                                        @Html.Raw("Validado")
-                                    }
-                                    else
-                                    {
-                                        @Html.Raw("Validar")
+                                        @if (item.Validado)
+                                        {
+                                            @Html.Raw("Validado")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Validar")
 
-                                    }
-                                </button>
-                            }
-                            else
-                            {
-                                <button id="btn-estado-@item.Id" class="btn btn-primary btn-sm btn-estado" data-active="@item.Validado" data-id="@item.Id">
+                                        }
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button id="btn-estado-@item.Id" class="btn btn-primary btn-sm btn-estado" data-active="@item.Validado" data-id="@item.Id">
 
-                                    @if (item.Validado)
-                                    {
-                                        @Html.Raw("Validado")
-                                    }
-                                    else
-                                    {
-                                        @Html.Raw("Validar")
+                                        @if (item.Validado)
+                                        {
+                                            @Html.Raw("Validado")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Validar")
 
-                                    }
-                                </button>
-                            }
+                                        }
+                                    </button>
+                                }
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -143,11 +143,47 @@
 
 
 @section scripts{
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+    </script>*@
+
     <script type="text/javascript">
         $(document).ready(function () {
-     
+            $("#dataTable").dataTable();
+            $(document).on("click", ".btn-estado", function () {
+                var btn = $(this);
+
+                var estado = btn.data("active");
+                var id = btn.data("id");
+                var statusColumn = $("#estado-" + id);
+
+                if (estado == "True") {
+                    $.get("/PersonasRegistradas/InValidateRegister?Id=" + id, function () {
+
+                        statusColumn.html("Inactivo");
+                        btn.html("Validar");
+                        btn.data("active", "False");
+                        btn.removeClass("btn-primary");
+                        btn.addClass("btn-danger");
+                        alert("Se ha marcado pendiente de validar!");
+                    });
+                } else {
+                    $.get("/PersonasRegistradas/ValidateRegister?Id=" + id, function () {
+                        statusColumn.html("Activo");
+                        btn.html("Validado");
+                        btn.data("active", "True");
+                        btn.removeClass("btn-danger");
+                        btn.addClass("btn-primary");
+                        alert("Se ha validado correctamente!");
+                    });
+                }
+            });
         });
 
     </script>
 }
+
 

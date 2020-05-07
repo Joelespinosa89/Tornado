@@ -1,1 +1,22 @@
-﻿
+﻿.bg-primary {
+    background-color: #005bac !important;
+}
+
+
+footer.sticky-footer {
+    position: fixed;
+    height: 35px;
+    padding-top: 13px;
+}
+
+/*.card {
+    box-shadow: 0px 2px 3px rgba(0,0,0, 0.2);
+    border : none !important;
+}*/
+
+.card-header {
+    border-bottom: none;
+    color: #005bac;
+    font-weight: bold;
+    font-size: 1.2em;
+}

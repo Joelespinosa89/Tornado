@@ -1,6 +1,6 @@
 ﻿@model Padron.Models.ContactForm
 @{
-    ViewBag.Title = "#Registro de Electores, REGISTRATE YA";
+    ViewBag.Title = "#Registro de Electores";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
@@ -92,11 +92,9 @@
                         <div class="form-group">
                             <div class="form-label-group">
 
-                                @Html.DropDownListFor(m => m.ProvinciaId, (List<SelectListItem>)Model.CascadingModel.ElectoralColleges, "Multiplicador", new { @class = "form-control", id = "ProvinciaId" })
+                                @Html.DropDownListFor(m => m.CoordinadorId, (List<SelectListItem>)Model.CascadingModel.Users, "Selecciones un Multiplicador", new { @class = "form-control", id = "CoordinadorId" })
 
-                                @*<input type="tel" name="TelefonoMovil" id="TelefonoMovil" class="form-control" placeholder="Telefono" required="required">
-                <label for="TelefonoMovil">Telefono</label>*@
-                                <span class="text-danger">@Html.ValidationMessageFor(m => m.ProvinciaId)</span>
+                                <span class="text-danger">@Html.ValidationMessageFor(m => m.CoordinadorId)</span>
 
 
                             </div>
@@ -216,15 +214,13 @@
                         </div>
                         <input class="btn btn-primary btn-block" id="submitbtn" type="submit" value="Enviar" />
                         @*<a  href="login.html">Registrar</a>*@
+                        <div>
+                            @Html.ActionLink("Volver Al Menu", "../PersonasRegistradas/MisPersonas")
+                        </div>
                     </form>
                 </div>
             </div>
-
-
-
-
-
-
+             
         }
 
     </div>
